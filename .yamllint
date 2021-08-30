@@ -1,0 +1,19 @@
+---
+extends: default
+
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - '.yamllint'
+
+ignore: |
+  roles/
+  collections/
+  .env/
+  .direnv/
+  .cache/
+
+rules:
+  line-length:
+    max: 120
+    level: warning

@@ -1,0 +1,20 @@
+---
+
+docker_services:
+ - name: prometheus-stack
+   perform:
+    - action: clone
+      url: https://github.com/vegasbrianc/prometheus.git
+   ingress:
+     - service: grafana
+       hosts:
+         - host: grafana.matiasferrigno.com.ar
+           port: 3000
+     - service: prometheus
+       hosts:
+         - host: prometheus.matiasferrigno.com.ar
+           port: 9090
+     - service: alertmanager
+       hosts:
+         - host: alertmanager.matiasferrigno.com.ar
+           port: 9093

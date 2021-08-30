@@ -1,0 +1,24 @@
+---
+
+galaxy_info:
+  role_name: docker_services
+  author: matiferrigno
+  description: deploys docker services on Linux.
+  company: self-employed
+
+  license: "license (BSD, MIT)"
+
+  min_ansible_version: 2.10
+
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+
+  galaxy_tags:
+    - docker
+    - deploy
+    - web
+
+dependencies: []

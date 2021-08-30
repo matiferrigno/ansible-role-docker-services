@@ -1,0 +1,11 @@
+.envrc
+.vault.password
+.env/
+.cache/
+.direnv/
+.terraform/
+.idea/
+.vscode/
+env/
+roles/
+collections/

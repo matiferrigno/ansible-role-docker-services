@@ -1,0 +1,16 @@
+---
+
+- name: Checkout repository
+  ansible.builtin.git:
+    repo: "{{ action.url }}"
+    dest: "{{ svc.workdir }}"
+    version: "{{ action.version | default('master') }}"
+    force: "{{ action.force | default(true)  }}"
+  when: action.url is defined
+
+- name: Delete repository
+  file:
+    path: "{{ svc.workdir }}"
+    state: absent
+    recurse: true
+  when: svc.state == 'absent'

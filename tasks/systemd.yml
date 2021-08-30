@@ -1,0 +1,30 @@
+---
+
+- name: Create service
+  template:
+    src: service.j2
+    dest: "{{ docker_services_systemd_path }}/{{ svc.name }}.service"
+    owner: "{{ item.systemd_owner | default('root') }}"
+    group: "{{ item.systemd_group | default('root') }}"
+    mode: u=rw,g=r,o=r
+  when: svc.state == 'present' and item.systemd_create | default(true)
+
+- name: Delete service
+  file:
+    path: "{{ docker_services_systemd_path }}/{{ svc.name }}.service"
+    state: absent
+  when: svc.state == 'absent'
+
+- name: Ensure service is started
+  systemd:
+    name: "{{ svc.name }}"
+    daemon_reload: true
+    state: started
+  when: svc.state != 'absent' and item.systemd_started | default(true)
+
+- name: Ensure service start on boot
+  systemd:
+    name: "{{ svc.name }}"
+    daemon_reload: true
+    enabled: true
+  when: svc.state != 'absent' and item.systemd_onboot | default(true)

@@ -1,0 +1,19 @@
+---
+
+- name: Copy content
+  copy:
+    content: |
+      {{ action.content }}
+    dest: "{{ svc.workdir + action.dest }}"
+    owner: "{{ svc.owner }}"
+    group: "{{ svc.group }}"
+    mode: u=rw,g=r,o=r
+  when: svc.state == action.state | default('present') == 'present'
+
+- name: Delete content
+  file:
+    path: "{{ svc.workdir + action.dest }}"
+    state: absent
+  when:
+  - svc.state == 'absent'
+  - action.state | default('present') == 'absent'

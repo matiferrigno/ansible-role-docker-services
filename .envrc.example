@@ -1,0 +1,19 @@
+layout pyenv 3.9.5
+
+export ANSIBLE_NOCOWS=1
+
+export ANSIBLE_LOCAL_TEMP="/tmp/ansible/tmp"
+
+export ANSIBLE_ROLES_PATH="$PWD/.ansible/roles"
+export ANSIBLE_COLLECTIONS_PATH="$PWD/.ansible/collections"
+export ANSIBLE_LIBRARY="$PWD/.ansible/modules"
+
+# # Configure Ansible to use the ARA callback plugin
+# export ANSIBLE_CALLBACK_PLUGINS="$(python3 -m ara.setup.callback_plugins)"
+
+# # Set up the ARA callback to know where the API server is located
+# export ARA_API_CLIENT="http"
+# export ARA_API_SERVER="https://ara.matiasferrigno.com.ar"
+
+# Molecule
+export MOLECULE_EPHEMERAL_DIRECTORY="$VIRTUAL_ENV/../molecule/default"

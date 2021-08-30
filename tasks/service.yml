@@ -1,0 +1,48 @@
+---
+
+- name: Save facts
+  set_fact:
+    svc: '{{ {
+      "workdir": item.root_path | default(docker_services_root_path + item.name) + "/",
+      "name": item.systemd_name | default(item.name),
+      "owner": item.owner | default(docker_services_default_owner),
+      "group": item.group | default(docker_services_default_group),
+      "ingress": item.ingress | default([]),
+      "state": item.state | default("present"),
+      }
+    }}'
+
+- name: Create project directory
+  file:
+    dest: "{{ svc.workdir }}"
+    owner: "{{ svc.owner }}"
+    group: "{{ svc.group }}"
+    recurse: true
+    state: "{{ (svc.state == 'present') | ternary('directory', 'absent') }}"
+
+- name: Perform
+  include_tasks: "perform/{{ action.action }}.yml"
+  loop: "{{ item.perform |  default([]) }}"
+  loop_control:
+    loop_var: action
+
+- name: Create ingress
+  template:
+    src: "ingress.yml.j2"
+    dest: "{{ svc.workdir }}/docker-compose.ingress.yml"
+    owner: "{{ svc.owner }}"
+    group: "{{ svc.group }}"
+    mode: u=rw,g=r,o=r
+  when: docker_services_proxy_enabled and svc.state == 'present' and svc.ingress | length > 0
+
+- name: Delete ingress
+  file:
+    path: "{{ svc.workdir + t.path }}"
+    state: absent
+  when:
+  - not docker_services_proxy_enabled
+  - svc.state == 'absent'
+  - svc.ingress | length == 0
+
+- name: Systemd
+  include_tasks: systemd.yml

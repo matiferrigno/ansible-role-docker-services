@@ -1,0 +1,6 @@
+exclude_paths:
+  - .direnv/
+  - .env/
+  - .cache/
+  - ./roles
+  - ./collections

@@ -1,0 +1,16 @@
+---
+
+- name: Install git
+  apt:
+    name: git
+    update_cache: true
+    state: present
+  when: docker_services_git_install
+
+- name: Create proxy
+  include_tasks: proxy.yml
+  when: docker_services_proxy_enabled
+
+- name: Create services
+  include_tasks: service.yml
+  loop: "{{ docker_services }}"

@@ -1,0 +1,50 @@
+---
+
+docker_services_proxy_enabled: true # so nginx (docker-compose) is going to be deployed
+docker_services_proxy_network: proxy
+docker_services_proxy_image: traefik:v2.5
+docker_services_proxy_command: "--api.insecure=true --providers.docker"
+docker_services_proxy_https_port: 443
+docker_services_proxy_http_port: 80
+docker_services_proxy_dashboard_port: 8080
+docker_services_proxy_extra_ports: []
+docker_services_proxy_extra_volume: []
+docker_services_docker_sock: /var/run/docker.sock
+docker_services_systemd_path: /lib/systemd/system/
+docker_services_root_path: /usr/local/src/
+docker_services_default_owner: root
+docker_services_default_group: root
+docker_services_git_install: true
+docker_services_compose_path: /usr/local/bin/docker-compose
+
+docker_services: []
+
+# Example:
+#
+# docker_services:
+#  - name: nexus
+#    copy_file: my_nexus/docker-compose.yml   # or... copy_template: my_nexus/docker-compose.yml.j2 / copy_content: ""
+#    ingress:
+#      - service: nexus
+#        hosts:
+#          - host: nexus.matiasferrigno.com.ar
+#            port: 5080
+#      - service: docker
+#        hosts:
+#          - host: registry.matiasferrigno.com.ar
+#            port: 5000
+#  - name: prometheus-stack
+#    git_url: https://github.com/vegasbrianc/prometheus.git
+#    ingress:
+#      - service: grafana
+#        hosts:
+#          - host: grafana.matiasferrigno.com.ar
+#            port: 3000
+#      - service: prometheus
+#        hosts:
+#          - host: prometheus.matiasferrigno.com.ar
+#            port: 9090
+#      - service: alertmanager
+#        hosts:
+#          - host: alertmanager.matiasferrigno.com.ar
+#            port: 9093
