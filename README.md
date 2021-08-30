@@ -6,7 +6,7 @@ This role configure services in var *docker_services* on a folder structure.
 
 If systemd_create is setted on a service (by default it is) the role will create a systemd service for handle start, reload, restart, stop.
 
-If ingress is true (by default it is) configured for a service, it aditionaly configure exports ports through nginx-proxy.
+If ingress is true (by default it is) aditionaly configure exports ports through traefik.
 
 ## Requirements
 
