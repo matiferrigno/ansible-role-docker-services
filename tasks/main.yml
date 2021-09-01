@@ -7,6 +7,13 @@
     state: present
   when: docker_services_git_install
 
+- name: Install yq (portable command-lineYAML processor)
+  get_url:
+    url: "{{ docker_services_yq_url }}"
+    dest: /usr/bin/yq
+    mode: u=rx,g=rx,o=rx
+  when: docker_services_yq_install
+
 - name: Create proxy
   include_tasks: proxy.yml
   when: docker_services_proxy_enabled

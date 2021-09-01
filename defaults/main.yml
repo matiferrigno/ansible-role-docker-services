@@ -15,6 +15,8 @@ docker_services_root_path: /usr/local/src/
 docker_services_default_owner: root
 docker_services_default_group: root
 docker_services_git_install: true
+docker_services_yq_install: true
+docker_services_yq_url: https://github.com/mikefarah/yq/releases/download/v4.12.1/yq_linux_amd64
 docker_services_compose_path: /usr/local/bin/docker-compose
 
 docker_services: []
