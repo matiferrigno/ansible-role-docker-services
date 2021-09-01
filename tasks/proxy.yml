@@ -26,11 +26,11 @@
                   - "{{ docker_services_proxy_http_port }}:80"
                   - "{{ docker_services_proxy_https_port }}:443"
                   - "{{ docker_services_proxy_dashboard_port }}:8080"
-                  {% for port in docker_services_proxy_extra_ports %}
+            {% for port in docker_services_proxy_extra_ports %}
                   - "{{ port }}:{{ port }}"
-                  {% endfor %}
+            {% endfor %}
                 volumes:
                   - {{ docker_services_docker_sock }}:/var/run/docker.sock
-                {% for volume in docker_services_proxy_extra_volume %}
+            {% for volume in docker_services_proxy_extra_volume %}
                   - "{{ volume }}"
-                {% endfor %}
+            {% endfor %}
