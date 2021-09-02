@@ -1,6 +1,6 @@
 ---
 
 - name: processing yaml with yq
-  shell: "/usr/bin/yq {{ action.file }} {{ action.args }}"
+  shell: "/usr/bin/yq {{ action.args }}"
   args:
     chdir: "{{ svc.workdir }}"
