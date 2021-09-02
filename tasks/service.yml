@@ -8,7 +8,6 @@
       "owner": item.owner | default(docker_services_default_owner),
       "group": item.group | default(docker_services_default_group),
       "ingress": item.ingress | default([]),
-      "compose_files": item.compose_files | default([]),
       "state": item.state | default("present"),
       }
     }}'
@@ -38,7 +37,7 @@
 
 - name: Add docker-compose.ingress.yml on compose_files
   set_fact:
-    compose_files: compose_files + ["docker-compose.ingress.yml"]
+    compose_files: "{{ item.compose_files | default([]) + ['docker-compose.ingress.yml'] }}"
   when: docker_services_proxy_enabled and svc.state == 'present' and svc.ingress | length > 0
 
 - name: Delete ingress

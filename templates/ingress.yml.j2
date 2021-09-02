@@ -12,7 +12,7 @@ services:
     networks:
       - {{ docker_services_proxy_network }}
     labels:
-      - "traefik.enable={{ i.state | default('present') == 'absent' | ternary(false,true) }}"
+      - "traefik.enable={{ (i.state | default('present')) == 'absent' | ternary(false,true) }}"
 {% if i.state | default('present') != 'absent' -%}
 {% for h in i.hosts | default([]) %}
 {% if h.state | default('present') != 'absent' %}

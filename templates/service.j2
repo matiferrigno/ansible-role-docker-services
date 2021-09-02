@@ -12,7 +12,7 @@ ExecStartPre={{ cmd }}
 {% endfor %}
 {% if not (item.systemd_exec_start_pre is defined) %}
 ExecStartPre=-{{ docker_services_compose_path }} \
-  {% for cf in (item.compose_files | default([])) %} -f {{ cf }} {% endfor %} \
+  {% for cf in compose_files %} -f {{ cf }} {% endfor %} \
   pull
 {% endif %}
 
@@ -21,7 +21,7 @@ ExecStart={{ cmd }}
 {% endfor %}
 {% if not (item.systemd_exec_start is defined) %}
 ExecStart={{ docker_services_compose_path }} \
-  {% for cf in (item.compose_files | default([])) %} -f {{ cf }} {% endfor %} \
+  {% for cf in compose_files %} -f {{ cf }} {% endfor %} \
   up
 {% endif %}
 {% for cmd in item.systemd_exec_start_post | default([]) %}
@@ -35,7 +35,7 @@ ExecStopPre={{ cmd }}
 ExecStop={{ systemd_exec_stop }}
 {% else %}
 ExecStop={{ docker_services_compose_path }} \
-  {% for cf in (item.compose_files | default([])) %} -f {{ cf }} {% endfor %} \
+  {% for cf in compose_files %} -f {{ cf }} {% endfor %} \
   down --remove-orphans
 {% endif %}
 {% for cmd in item.systemd_exec_stop_post | default([]) %}
@@ -46,7 +46,7 @@ ExecStopPost={{ cmd }}
 ExecReload={{ systemd_exec_reload }}
 {% else %}
 ExecReload={{ docker_services_compose_path }} \
-  {% for cf in (item.compose_files | default([])) %} -f {{ cf }} {% endfor %} \
+  {% for cf in compose_files %} -f {{ cf }} {% endfor %} \
   up
 {% endif %}
 
