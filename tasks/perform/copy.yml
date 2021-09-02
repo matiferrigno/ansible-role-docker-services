@@ -2,7 +2,7 @@
 
 - name: Copy file
   copy:
-    src: "{{ action.src }}"
+    src: "{{ svc.workdir + action.src }}"
     dest: "{{ svc.workdir + action.dest | default(action.src) }}"
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"

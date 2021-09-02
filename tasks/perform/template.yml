@@ -2,7 +2,7 @@
 
 - name: Copy template
   template:
-    src: "{{ action.template }}"
+    src: "{{ svc.workdir + action.template }}"
     dest: "{{ svc.workdir + action.dest | default(action.template | replace('.j2','')) }}"
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"
