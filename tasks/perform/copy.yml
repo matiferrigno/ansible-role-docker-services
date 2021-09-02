@@ -2,8 +2,8 @@
 
 - name: Copy file
   copy:
-    src: "{{ svc.workdir + action.src }}"
-    dest: "{{ svc.workdir + action.dest | default(action.src) }}"
+    src: "{{ svc.name }}/{{ action.src }}"
+    dest: "{{ svc.workdir }}/{{ action.dest | default(action.src) }}"
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"
     mode: u=rw,g=r,o=r
@@ -11,7 +11,7 @@
 
 - name: Delete file
   file:
-    path: "{{ svc.workdir + action.src | default(action.file) }}"
+    path: "{{ svc.workdir }}/{{ action.dest | default(action.src) }}"
     state: absent
   when:
   - svc.state == 'absent'

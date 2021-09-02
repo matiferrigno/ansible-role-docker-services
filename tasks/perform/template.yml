@@ -2,16 +2,16 @@
 
 - name: Copy template
   template:
-    src: "{{ svc.workdir + action.template }}"
-    dest: "{{ svc.workdir + action.dest | default(action.template | replace('.j2','')) }}"
+    src: "{{ svc.name }}/{{ action.template }}"
+    dest: "{{ svc.workdir }}/{{ action.dest | default(action.template | replace('.j2','')) }}"
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"
     mode: u=rw,g=r,o=r
   when: svc.state == 'present' and action.state | default('present') == 'present'
 
-- name: Delete content
+- name: Delete template
   file:
-    path: "{{ svc.workdir + action.dest | default(action.template | replace('.j2','')) }}"
+    path: "{{ svc.workdir }}/{{ action.dest | default(action.template | replace('.j2','')) }}"
     state: absent
   when:
   - svc.state == 'absent'
