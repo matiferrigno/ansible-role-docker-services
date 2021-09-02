@@ -26,11 +26,6 @@
   loop_control:
     loop_var: action
 
-- name: Add docker-compose.ingress.yml on compose_files
-  set_fact:
-    compose_files: "{{ item.compose_files | default([]) + ['docker-compose.ingress.yml'] }}"
-  when: docker_services_proxy_enabled and svc.state == 'present' and svc.ingress | length > 0
-
 - name: Create ingress
   template:
     src: "ingress.yml.j2"
