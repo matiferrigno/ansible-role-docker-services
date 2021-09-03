@@ -16,7 +16,7 @@ services:
 {% if i.state | default('present') != 'absent' -%}
 {% for h in i.hosts | default([]) %}
 {% if h.state | default('present') != 'absent' %}
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.entrypoints={{ h.entrypoints | default(['https'] | join(',')) }}"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.entrypoints={{ h.entrypoints | default(['websecure'] | join(',')) }}"
       - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.rule=Host(`{{ h.host }}`)"
 {% for m in h.middlewares | default([]) %}
        - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.middlewares={{ m }}"

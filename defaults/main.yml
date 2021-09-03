@@ -3,7 +3,7 @@
 docker_services_proxy_enabled: true # so nginx (docker-compose) is going to be deployed
 docker_services_proxy_network: proxy
 docker_services_proxy_image: traefik:v2.5
-docker_services_proxy_command: "--api.insecure=true --providers.docker"
+docker_services_proxy_command: "--api.insecure=true --api.dashboard=true --providers.docker"
 docker_services_proxy_https_port: 443
 docker_services_proxy_http_port: 80
 docker_services_proxy_dashboard_port: 8080
