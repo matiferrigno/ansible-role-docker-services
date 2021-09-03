@@ -15,6 +15,7 @@
 
             networks:
               {{ docker_services_proxy_network }}:
+                name: {{ docker_services_proxy_network }}
 
             services:
               reverse-proxy:
