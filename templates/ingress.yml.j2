@@ -18,6 +18,7 @@ services:
 {% if h.state | default('present') != 'absent' %}
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.entrypoints={{ h.entrypoints | default(['web','websecure'] | join(',')) }}"
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.rule=Host(`{{ h.host }}`)"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls=true"
 {% for m in h.middlewares | default([]) %}
        - "traefik.http.routers.{{ h.host | replace('.','-') }}.middlewares={{ m }}"
 {% endfor %}
