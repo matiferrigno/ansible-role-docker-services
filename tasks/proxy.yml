@@ -35,3 +35,8 @@
             {% for volume in docker_services_proxy_extra_volume %}
                   - "{{ volume }}"
             {% endfor %}
+            labels:
+              - "traefik.http.routers.traefik.entrypoints={{ h.entrypoints | default(['web','websecure'] | join(',')) }}"
+              - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+              - "traefik.http.routers.traefik.rule=hostregexp(`{host:.+}`)"
+              - "traefik.http.routers.traefik.middlewares=redirect-to-https"

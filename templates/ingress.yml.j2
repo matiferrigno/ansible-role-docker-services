@@ -16,16 +16,13 @@ services:
 {% if i.state | default('present') != 'absent' -%}
 {% for h in i.hosts | default([]) %}
 {% if h.state | default('present') != 'absent' %}
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.entrypoints={{ h.entrypoints | default(['websecure'] | join(',')) }}"
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.rule=Host(`{{ h.host }}`)"
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.tls=true"
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.middlewares.https_redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.middlewares.https_redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.entrypoints={{ h.entrypoints | default(['web','websecure'] | join(',')) }}"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.rule=Host(`{{ h.host }}`)"
 {% for m in h.middlewares | default([]) %}
-       - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.middlewares={{ m }}"
+       - "traefik.http.routers.{{ h.host | replace('.','-') }}.middlewares={{ m }}"
 {% endfor %}
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.service={{ h.host | replace('.','-') }}-svc"
-      - "traefik.http.services.{{ h.host | replace('.','-') }}-svc.loadbalancer.server.port={{ h.port | default(80) }}"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.service={{ h.host | replace('.','-') }}-svc"
+      - "traefik.http.services.{{ h.host | replace('.','-') }}.loadbalancer.server.port={{ h.port | default(80) }}"
 {% endif %}
 {% endfor -%}
 {% endif %}
