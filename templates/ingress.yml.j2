@@ -18,6 +18,9 @@ services:
 {% if h.state | default('present') != 'absent' %}
       - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.entrypoints={{ h.entrypoints | default(['websecure'] | join(',')) }}"
       - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.rule=Host(`{{ h.host }}`)"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.tls=true"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.middlewares.https_redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.middlewares.https_redirect.redirectscheme.permanent=true"
 {% for m in h.middlewares | default([]) %}
        - "traefik.http.routers.{{ h.host | replace('.','-') }}-rtr.middlewares={{ m }}"
 {% endfor %}

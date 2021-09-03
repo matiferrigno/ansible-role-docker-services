@@ -22,7 +22,7 @@ ExecStart={{ cmd }}
 {% if not (item.systemd_exec_start is defined) %}
 ExecStart={{ docker_services_compose_path }} \
   {% for cf in compose_files | default([]) %} -f {{ cf }} {% endfor %} \
-  up
+  up --remove-orphans --renew-anon-volumes --quiet-pull
 {% endif %}
 {% for cmd in item.systemd_exec_start_post | default([]) %}
 ExecStartPost={{ cmd }}
