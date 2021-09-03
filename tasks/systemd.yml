@@ -1,6 +1,5 @@
 ---
 
-
 - name: Add docker-compose.ingress.yml on compose_files
   set_fact:
     compose_files: "{{ item.compose_files | default([]) + ['docker-compose.ingress.yml'] }}"
