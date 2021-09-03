@@ -1,5 +1,7 @@
 ---
 
+- include_tasks: mkdir.yml
+
 - name: Copy template
   template:
     src: "{{ svc.name }}/{{ action.template }}"

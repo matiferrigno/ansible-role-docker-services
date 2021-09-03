@@ -1,5 +1,7 @@
 ---
 
+- include_tasks: mkdir.yml
+
 - name: Copy file
   copy:
     src: "{{ svc.name }}/{{ action.src }}"

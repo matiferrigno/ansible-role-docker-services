@@ -1,0 +1,10 @@
+---
+
+- name: Create directory
+  file:
+    path: "{{ svc.workdir }}/{{ action.dest | realpath }}"
+    state: directory
+    owner: "{{ svc.owner }}"
+    group: "{{ svc.group }}"
+    mode: u=rwx,g=rwx,o=rx
+    recurse: yes
