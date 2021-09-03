@@ -1,15 +1,8 @@
 ---
 
-
-- name: Add docker-compose.yml on compose_files
-  set_fact:
-    compose_files: "{{ item.compose_files | default(['docker-compose.yml']) }}"
-  when: item.compose_files | length == 0
-
-
 - name: Add docker-compose.ingress.yml on compose_files
   set_fact:
-    compose_files: "{{ compose_files + ['docker-compose.ingress.yml'] }}"
+    compose_files: "{{ item.compose_files | default(['docker-compose.yml','docker-compose.ingress.yml']) }}"
   when: docker_services_proxy_enabled and svc.state == 'present' and svc.ingress | length > 0
 
 - name: Create service
