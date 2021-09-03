@@ -21,7 +21,7 @@ services:
 {% for m in h.middlewares | default([]) %}
        - "traefik.http.routers.{{ h.host | replace('.','-') }}.middlewares={{ m }}"
 {% endfor %}
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}.service={{ h.host | replace('.','-') }}-svc"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.service={{ h.host | replace('.','-') }}"
       - "traefik.http.services.{{ h.host | replace('.','-') }}.loadbalancer.server.port={{ h.port | default(80) }}"
 {% endif %}
 {% endfor -%}
