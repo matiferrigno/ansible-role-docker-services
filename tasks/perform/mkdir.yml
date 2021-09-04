@@ -2,7 +2,7 @@
 
 - name: Create directory
   file:
-    path: "{{ (svc.workdir + '/' + (action.dest  | default(action.template | replace('.j2',''))) | dirname }}"
+    path: "{{ (svc.workdir + '/' + (action.dest  | default(action.template | replace('.j2','')))) | dirname }}"
     state: directory
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"
