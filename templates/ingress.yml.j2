@@ -13,8 +13,8 @@ services:
       - {{ docker_services_proxy_network }}
     labels:
       - "traefik.enable={{ ((i.state | default('present')) == 'absent') | ternary(false,true) }}"
-{% if i.state | default('present') != 'absent' -%}
       - "traefik.docker.network={{ docker_services_proxy_network }}"
+{% if i.state | default('present') != 'absent' -%}
 {% for h in i.hosts | default([]) %}
 {% if h.state | default('present') != 'absent' %}
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.entrypoints={{ h.entrypoints | default(['web','websecure'] | join(',')) }}"
