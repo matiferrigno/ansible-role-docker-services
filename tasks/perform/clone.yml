@@ -6,6 +6,7 @@
     dest: "{{ svc.workdir }}"
     version: "{{ action.version | default('master') }}"
     force: "{{ action.force | default(true)  }}"
+    depth: "{{ action.depth | default(1)  }}"
   when: action.url is defined
 
 - name: Delete repository
