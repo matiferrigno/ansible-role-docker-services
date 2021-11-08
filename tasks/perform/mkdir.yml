@@ -1,8 +1,11 @@
 ---
 
-- name: Create directory
+- set_fact:
+    dir: "{{ svc.workdir + '/' + action.dest }}"
+
+- name: "Create directory {{ dir }}"
   file:
-    path: "{{ svc.workdir + '/' + action.dest }}"
+    path: "{{ dir }}"
     state: directory
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"

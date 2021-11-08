@@ -1,11 +1,22 @@
 ---
 
-- include_tasks: mkdir.yml
+- set_fact:
+    dir: "{{ (svc.workdir + '/' + (action.dest  | default(action.template | replace('.j2','')))) | dirname }}"
+    dest: "{{ svc.workdir }}/{{ action.dest | default(action.src) }}"
 
-- name: Copy file
+- name: "Create directory {{ dir }}"
+  file:
+    path: "{{ dir }}"
+    state: directory
+    owner: "{{ svc.owner }}"
+    group: "{{ svc.group }}"
+    mode: u=rwx,g=rwx,o=rx
+    recurse: yes
+
+- name: "Copy file {{ dest }}"
   copy:
     src: "{{ svc.name }}/{{ action.src }}"
-    dest: "{{ svc.workdir }}/{{ action.dest | default(action.src) }}"
+    dest: "{{ dest }}"
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"
     mode: u=rw,g=r,o=r
@@ -13,7 +24,7 @@
 
 - name: Delete file
   file:
-    path: "{{ svc.workdir }}/{{ action.dest | default(action.src) }}"
+    path: "{{ dest }}"
     state: absent
   when:
   - svc.state == 'absent'

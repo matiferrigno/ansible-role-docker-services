@@ -1,6 +1,6 @@
 ---
 
-- name: Checkout repository
+- name: "Checkout repository {{ action.url }}"
   ansible.builtin.git:
     repo: "{{ action.url }}"
     dest: "{{ svc.workdir }}"
@@ -9,7 +9,7 @@
     depth: "{{ action.depth | default(1)  }}"
   when: action.url is defined
 
-- name: Delete repository
+- name: "Delete repository {{ action.url }}"
   file:
     path: "{{ svc.workdir }}"
     state: absent

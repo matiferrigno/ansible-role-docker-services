@@ -1,18 +1,22 @@
 ---
 
-- name: Create directory
+- set_fact:
+    dir: "{{ (svc.workdir + '/' + (action.dest  | default(action.template | replace('.j2','')))) | dirname }}"
+    templ: "{{ svc.workdir }}/{{ action.dest | default(action.template | replace('.j2','')) }}"
+
+- name: "Create directory {{ dir }}"
   file:
-    path: "{{ (svc.workdir + '/' + (action.dest  | default(action.template | replace('.j2','')))) | dirname }}"
+    path: "{{ dir }}"
     state: directory
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"
     mode: u=rwx,g=rwx,o=rx
     recurse: yes
 
-- name: Copy template
+- name: "Copy template {{ templ }}"
   template:
     src: "{{ svc.name }}/{{ action.template }}"
-    dest: "{{ svc.workdir }}/{{ action.dest | default(action.template | replace('.j2','')) }}"
+    dest: "{{ templ }}"
     owner: "{{ svc.owner }}"
     group: "{{ svc.group }}"
     mode: u=rw,g=r,o=r
@@ -20,7 +24,7 @@
 
 - name: Delete template
   file:
-    path: "{{ svc.workdir }}/{{ action.dest | default(action.template | replace('.j2','')) }}"
+    path: "{{ templ }}"
     state: absent
   when:
   - svc.state == 'absent'
