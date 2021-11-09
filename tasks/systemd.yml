@@ -4,7 +4,7 @@
   set_fact:
     compose_files: "{{ item.compose_files | default(['docker-compose.yml','docker-compose.ingress.yml']) }}"
 
-- name: Create service
+- name: "Create service {{ svc.name }}"
   template:
     src: service.j2
     dest: "{{ docker_services_systemd_path }}/{{ svc.name }}.service"
@@ -13,20 +13,20 @@
     mode: u=rw,g=r,o=r
   when: svc.state == 'present' and item.systemd_create | default(true)
 
-- name: Delete service
+- name: "Delete service {{ svc.name }}"
   file:
     path: "{{ docker_services_systemd_path }}/{{ svc.name }}.service"
     state: absent
   when: svc.state == 'absent'
 
-- name: Ensure service is started
+- name: "Ensure service {{ svc.name }} is started"
   systemd:
     name: "{{ svc.name }}"
     daemon_reload: true
     state: started
   when: svc.state != 'absent' and item.systemd_started | default(true)
 
-- name: Ensure service start on boot
+- name: "Ensure service {{ svc.name }} start on boot"
   systemd:
     name: "{{ svc.name }}"
     daemon_reload: true

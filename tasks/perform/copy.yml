@@ -22,7 +22,7 @@
     mode: u=rw,g=r,o=r
   when: svc.state == 'present' and action.state | default('present') == 'present'
 
-- name: Delete file
+- name: "Delete file {{ dest }}"
   file:
     path: "{{ dest }}"
     state: absent

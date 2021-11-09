@@ -22,7 +22,7 @@
     mode: u=rw,g=r,o=r
   when: svc.state == 'present' and action.state | default('present') == 'present'
 
-- name: Delete template
+- name: "Delete template {{ templ }}"
   file:
     path: "{{ templ }}"
     state: absent

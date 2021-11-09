@@ -39,3 +39,7 @@
             {% endfor %}
                 labels:
                 - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+                - "traefik.http.routers.dashboard.rule=Host(`{{ docker_services_proxy_dashboard_url }}`)"
+                - "traefik.http.routers.dashboard.service=api@internal"
+                - "traefik.http.routers.dashboard.middlewares=auth"
+                - "traefik.http.middlewares.auth.basicauth.users={{ docker_services_proxy_dashboard_users }}"
