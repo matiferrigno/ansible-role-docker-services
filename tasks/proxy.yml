@@ -42,7 +42,6 @@
                 - "traefik.http.routers.traefik.entrypoints=web,websecure"
                 - "traefik.http.routers.traefik.tls=true"
                 - "traefik.http.routers.traefik.rule=Host(`{{ docker_services_proxy_dashboard_url }}`)"
-                - "traefik.http.routers.traefik.rule=Host(`traefik-ui.local`)"
                 - "traefik.http.routers.traefik.entrypoints=websecure"
                 - "traefik.http.routers.traefik.service=api@internal"
                 - "traefik.http.routers.traefik.middlewares=traefik-auth"
