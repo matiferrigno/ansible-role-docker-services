@@ -3,10 +3,9 @@
 docker_services_proxy_enabled: true # so nginx (docker-compose) is going to be deployed
 docker_services_proxy_network: proxy
 docker_services_proxy_image: traefik:v2.5
-docker_services_proxy_command: "--api.dashboard=true --providers.docker --entryPoints.web.address=:80 --entryPoints.websecure.address=:443 --log.level=DEBUG"
+docker_services_proxy_command: "--api.dashboard=true --providers.docker --providers.docker.network={{ docker_services_proxy_network }} --entryPoints.web.address=:80 --entryPoints.websecure.address=:443 --entrypoints.web.http.redirections.entryPoint.to=websecure --entrypoints.web.http.redirections.entryPoint.scheme=https --log.level=INFO"
 docker_services_proxy_https_port: 443
 docker_services_proxy_http_port: 80
-docker_services_proxy_dashboard_port: 8080
 docker_services_proxy_dashboard_url: dashboard.local
 docker_services_proxy_dashboard_users: "root:$$2y$$05$$HLNovB3ZR2WXsHQ8c8XOluQqiE6ZDB3XdDoiUP6DFXN0KgfnD8rOW" # root : toor
 docker_services_proxy_extra_ports: []

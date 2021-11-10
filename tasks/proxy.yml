@@ -28,7 +28,6 @@
                 ports:
                   - "{{ docker_services_proxy_http_port }}:80"
                   - "{{ docker_services_proxy_https_port }}:443"
-                  - "{{ docker_services_proxy_dashboard_port }}:8080"
             {% for port in docker_services_proxy_extra_ports %}
                   - "{{ port }}:{{ port }}"
             {% endfor %}
@@ -38,8 +37,16 @@
                   - "{{ volume }}"
             {% endfor %}
                 labels:
+                - "traefik.enable=true"
                 - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-                - "traefik.http.routers.dashboard.rule=Host(`{{ docker_services_proxy_dashboard_url }}`)"
-                - "traefik.http.routers.dashboard.service=api@internal"
-                - "traefik.http.routers.dashboard.middlewares=auth"
-                - "traefik.http.middlewares.auth.basicauth.users={{ docker_services_proxy_dashboard_users }}"
+                - "traefik.http.routers.traefik.entrypoints=web,websecure"
+                - "traefik.http.routers.traefik.tls=true"
+                - "traefik.http.routers.traefik.rule=Host(`{{ docker_services_proxy_dashboard_url }}`)"
+                - "traefik.http.routers.traefik.rule=Host(`traefik-ui.local`)"
+                - "traefik.http.routers.traefik.entrypoints=websecure"
+                - "traefik.http.routers.traefik.service=api@internal"
+                - "traefik.http.routers.traefik.middlewares=traefik-auth"
+                - "traefik.http.middlewares.traefik-auth.basicauth.users={{ docker_services_proxy_dashboard_users }}"
+            {% for label in docker_services_proxy_extra_labels %}
+                - "{{ label }}"
+            {% endfor %}
