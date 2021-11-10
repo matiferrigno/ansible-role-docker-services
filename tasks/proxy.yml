@@ -46,6 +46,6 @@
                 - "traefik.http.routers.traefik.service=api@internal"
                 - "traefik.http.routers.traefik.middlewares=traefik-auth"
                 - "traefik.http.middlewares.traefik-auth.basicauth.users={{ docker_services_proxy_dashboard_users }}"
-            {% for label in docker_services_proxy_extra_labels %}
+            {% for label in docker_services_proxy_extra_labels | default([]) %}
                 - "{{ label }}"
             {% endfor %}
