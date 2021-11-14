@@ -44,5 +44,7 @@
   - svc.state == 'absent'
   - svc.ingress | length == 0
 
+- include_tasks: ./gen-cert.yml
+
 - name: Systemd
   include_tasks: systemd.yml

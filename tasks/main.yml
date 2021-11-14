@@ -1,23 +1,32 @@
 ---
 
-- name: Install git
+- name: install git
   apt:
     name: git
     update_cache: true
+    install_recommends: false
     state: present
-  when: docker_services_git_install
+  when: docker_services_git_install | default(true)
 
-- name: Install yq (portable command-lineYAML processor)
+- name: install python3-cryptography
+  apt:
+    name: python3-cryptography
+    update_cache: true
+    install_recommends: false
+    state: present
+  when: docker_services_python_criptography | default(true)
+
+- name: install yq (portable command-lineYAML processor)
   get_url:
     url: "{{ docker_services_yq_url }}"
     dest: /usr/bin/yq
     mode: u=rx,g=rx,o=rx
   when: docker_services_yq_install
 
-- name: Create proxy
+- name: create proxy
   include_tasks: proxy.yml
   when: docker_services_proxy_enabled
 
-- name: Create services
+- name: create services
   include_tasks: service.yml
   loop: "{{ docker_services }}"
