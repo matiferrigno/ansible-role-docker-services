@@ -1,7 +1,7 @@
 ---
 
 - set_fact:
-    certs_root: "{{ docker_services_root_path }}/reverse-proxy/certs"
+    certs_root: "{{ docker_services_root_path }}reverse-proxy/certs"
 
 - name: Create reverse-proxy
   include_tasks: service.yml
@@ -12,6 +12,8 @@
       perform:
         - action: mkdir
           dest: ./config.d
+        - action: mkdir
+          dest: ./certs
         - action: content
           dest: docker-compose.yml
           content: |
