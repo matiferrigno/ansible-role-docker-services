@@ -18,7 +18,7 @@
   community.crypto.x509_certificate:
     path: "{{ certs_root }}/{{ svc.name }}.crt"
     csr_path: "{{ certs_root }}/{{ svc.name }}.csr"
-    privatekey_path: "{{ certs_root }}/{{ svc.name }}.ley"
+    privatekey_path: "{{ certs_root }}/{{ svc.name }}.key"
     ownca_path: "{{ certs_root }}/ca.crt"
     ownca_privatekey_path: "{{ certs_root }}/ca.key"
     provider: ownca
