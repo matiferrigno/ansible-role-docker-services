@@ -31,6 +31,7 @@
 - name: Add certs to traefik
   blockinfile:
     path: "{{ docker_services_root_path }}reverse-proxy/config.d/certs.yml"
+    create: true
     block: |
       tls:
         certificates:
