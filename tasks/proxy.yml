@@ -28,6 +28,18 @@
     csr_path: "{{ certs_root }}/ca.csr"
     provider: selfsigned
 
+- name: Add certs to traefik
+  blockinfile:
+    path: "{{ docker_services_root_path }}reverse-proxy/config.d/certs.yml"
+    block: |
+      tls:
+        certificates:
+          - certFile: "{{ certs_root }}/{{ s.name }}.crt"
+            keyFile: "{{ certs_root }}/{{ s.name }}.key"
+  loop: "{{ docker_services }}"
+  loop_control:
+    loop_var: s
+
 - name: Create reverse-proxy
   include_tasks: service.yml
   loop:
