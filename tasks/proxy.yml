@@ -3,6 +3,31 @@
 - set_fact:
     certs_root: "{{ docker_services_root_path }}reverse-proxy/certs"
 
+- name: Generate CA private key certificate
+  community.crypto.openssl_privatekey:
+    path: "{{ certs_root }}/ca.key"
+    size: 4096
+
+- name: Generate CA certificate signing request
+  community.crypto.openssl_csr:
+    path: "{{ certs_root }}/ca.csr"
+    privatekey_path: "{{ certs_root }}/ca.key"
+    common_name: CA
+    basic_constraints:
+      - CA:TRUE
+    basic_constraints_critical: true
+    key_usage:
+      - keyCertSign
+      - digitalSignature
+    key_usage_critical: true
+
+- name: Generate CA self-signed public certificate
+  community.crypto.x509_certificate:
+    path: "{{ certs_root }}/ca.crt"
+    privatekey_path: "{{ certs_root }}/ca.key"
+    csr_path: "{{ certs_root }}/ca.csr"
+    provider: selfsigned
+
 - name: Create reverse-proxy
   include_tasks: service.yml
   loop:
@@ -60,28 +85,3 @@
             {% for label in docker_services_proxy_extra_labels | default([]) %}
                 - "{{ label }}"
             {% endfor %}
-
-- name: Generate CA private key certificate
-  community.crypto.openssl_privatekey:
-    path: "{{ certs_root }}/ca.key"
-    size: 4096
-
-- name: Generate CA certificate signing request
-  community.crypto.openssl_csr:
-    path: "{{ certs_root }}/ca.csr"
-    privatekey_path: "{{ certs_root }}/ca.key"
-    common_name: CA
-    basic_constraints:
-      - CA:TRUE
-    basic_constraints_critical: true
-    key_usage:
-      - keyCertSign
-      - digitalSignature
-    key_usage_critical: true
-
-- name: Generate CA self-signed public certificate
-  community.crypto.x509_certificate:
-    path: "{{ certs_root }}/ca.crt"
-    privatekey_path: "{{ certs_root }}/ca.key"
-    csr_path: "{{ certs_root }}/ca.csr"
-    provider: selfsigned
