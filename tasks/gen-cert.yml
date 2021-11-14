@@ -22,3 +22,4 @@
     ownca_path: "{{ certs_root }}/ca.crt"
     ownca_privatekey_path: "{{ certs_root }}/ca.key"
     provider: ownca
+    valid_at: "+365d"
