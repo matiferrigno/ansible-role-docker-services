@@ -77,7 +77,7 @@
                   - "{{ port }}:{{ port }}"
             {% endfor %}
                 volumes:
-                  - ./config.d/:/config.d
+                  - ./config.d:/config.d
                   - ./certs:/certs
                   - {{ docker_services_docker_sock }}:/var/run/docker.sock
             {% for volume in docker_services_proxy_extra_volume %}
