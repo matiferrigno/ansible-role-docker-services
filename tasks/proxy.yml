@@ -63,8 +63,6 @@
             networks:
               {{ docker_services_proxy_network }}:
                 name: {{ docker_services_proxy_network }}
-            volumes:
-              certs: {}
 
             services:
               reverse-proxy:
@@ -80,7 +78,7 @@
             {% endfor %}
                 volumes:
                   - ./config.d/:/config.d
-                  - certs:/certs
+                  - ./certs:/certs
                   - {{ docker_services_docker_sock }}:/var/run/docker.sock
             {% for volume in docker_services_proxy_extra_volume %}
                   - "{{ volume }}"
