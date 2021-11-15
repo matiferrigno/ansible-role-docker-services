@@ -45,6 +45,9 @@
   - svc.ingress | length == 0
 
 - include_tasks: ./gen-cert.yml
+  vars:
+    host: "{{ item.host }}"
+  loop: "{{ srv.ingress | default([]) }}"
 
 - name: Systemd
   include_tasks: systemd.yml
