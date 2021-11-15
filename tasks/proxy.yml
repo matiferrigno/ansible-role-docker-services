@@ -3,6 +3,11 @@
 - set_fact:
     certs_root: "{{ docker_services_root_path }}reverse-proxy/certs"
 
+- name: Create certs directory
+  file:
+    path: "{{ certs_root }}"
+    state: directory
+
 - name: Generate CA private key certificate
   community.crypto.openssl_privatekey:
     path: "{{ certs_root }}/ca.key"
@@ -54,8 +59,6 @@
       perform:
         - action: mkdir
           dest: ./config.d
-        - action: mkdir
-          dest: ./certs
         - action: content
           dest: docker-compose.yml
           content: |
