@@ -36,8 +36,10 @@
       tls:
         certificates:
         {% for i in s.ingress | default([]) %}
-          - certFile: "{{ certs_root }}/{{ i.host }}.crt"
-            keyFile: "{{ certs_root }}/{{ i.host }}.key"
+        {% for h in i.hosts | default([]) %}
+          - certFile: "{{ certs_root }}/{{ h.host }}.crt"
+            keyFile: "{{ certs_root }}/{{ h.host }}.key"
+        {% endfor %}
         {% endfor %}
   loop: "{{ docker_services }}"
   loop_control:

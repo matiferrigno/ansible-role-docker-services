@@ -2,24 +2,27 @@
 
 - name: Generate private key certificate
   community.crypto.openssl_privatekey:
-    path: "{{ certs_root }}/{{ host }}.key"
+    path: "{{ certs_root }}/{{ item.host }}.key"
     size: 4096
+  loop: "{{ hosts }}"
 
 - name: Generate certificate signing request
   community.crypto.openssl_csr:
-    path: "{{ certs_root }}/{{ host }}.csr"
-    privatekey_path: "{{ certs_root }}/{{ host }}.key"
-    common_name: "intranet.syper.edu"
+    path: "{{ certs_root }}/{{ item.host }}.csr"
+    privatekey_path: "{{ certs_root }}/{{ item.host }}.key"
+    common_name: "{{ item.host }}"
     basic_constraints:
       - CA:FALSE
     basic_constraints_critical: true
+  loop: "{{ hosts }}"
 
 - name: Generate self-signed public certificate
   community.crypto.x509_certificate:
-    path: "{{ certs_root }}/{{ host }}.crt"
-    csr_path: "{{ certs_root }}/{{ host }}.csr"
-    privatekey_path: "{{ certs_root }}/{{ host }}.key"
+    path: "{{ certs_root }}/{{ item.host }}.crt"
+    csr_path: "{{ certs_root }}/{{ item.host }}.csr"
+    privatekey_path: "{{ certs_root }}/{{ item.host }}.key"
     ownca_path: "{{ certs_root }}/ca.crt"
     ownca_privatekey_path: "{{ certs_root }}/ca.key"
     provider: ownca
     valid_at: "+365d"
+  loop: "{{ hosts }}"

@@ -46,7 +46,7 @@
 
 - include_tasks: ./gen-cert.yml
   vars:
-    host: "{{ item.host }}"
+    hosts: "{{ item.hosts | default([]) }}"
   loop: "{{ srv.ingress | default([]) }}"
 
 - name: Systemd
