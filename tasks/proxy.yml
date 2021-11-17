@@ -44,8 +44,8 @@
         {% for h in i.hosts | default([]) %}
 
         # {{ s.name }} - {{ h.host }}
-        - certFile: "{{ certs_root }}/{{ h.host }}.crt"
-          keyFile: "{{ certs_root }}/{{ h.host }}.key"
+        - certFile: "/certs/{{ h.host }}.crt"
+          keyFile: "/certs/{{ h.host }}.key"
         {% endfor %}
         {% endfor %}
         {% endfor %}
