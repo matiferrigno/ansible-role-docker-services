@@ -34,21 +34,18 @@
     provider: selfsigned
 
 - name: Add certs to traefik
-  blockinfile:
-    path: "{{ docker_services_root_path }}reverse-proxy/config.d/certs.yml"
-    create: true
-    block: |
+  copy:
+    dest: "{{ docker_services_root_path }}reverse-proxy/config.d/certs.yml"
+    content: |
       tls:
         certificates:
+        {% for s in docker_services %}
         {% for i in s.ingress | default([]) %}
         {% for h in i.hosts | default([]) %}
         - certFile: "{{ certs_root }}/{{ h.host }}.crt"
           keyFile: "{{ certs_root }}/{{ h.host }}.key"
         {% endfor %}
         {% endfor %}
-  loop: "{{ docker_services }}"
-  loop_control:
-    loop_var: s
 
 - name: Create reverse-proxy
   include_tasks: service.yml
