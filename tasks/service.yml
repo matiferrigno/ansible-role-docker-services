@@ -47,7 +47,7 @@
 - include_tasks: ./gen-cert.yml
   vars:
     hosts: "{{ item.hosts | default([]) }}"
-  loop: "{{ srv.ingress | default([]) }}"
+  loop: "{{ svc.ingress | default([]) }}"
 
 - name: Systemd
   include_tasks: systemd.yml
