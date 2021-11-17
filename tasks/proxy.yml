@@ -42,6 +42,8 @@
         {% for s in docker_services %}
         {% for i in s.ingress | default([]) %}
         {% for h in i.hosts | default([]) %}
+
+        # {{ s.name }} - {{ h.host }}
         - certFile: "{{ certs_root }}/{{ h.host }}.crt"
           keyFile: "{{ certs_root }}/{{ h.host }}.key"
         {% endfor %}
