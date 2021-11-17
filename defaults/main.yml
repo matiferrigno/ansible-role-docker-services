@@ -18,7 +18,7 @@ docker_services_default_group: root
 docker_services_git_install: true
 docker_services_yq_install: true
 docker_services_yq_url: https://github.com/mikefarah/yq/releases/download/v4.12.1/yq_linux_amd64
-docker_services_compose_path: $(/usr/bin/which docker) compose # for compose 1.21
+docker_services_compose_path: $(/usr/bin/which docker) compose # for compose 2.1.1
 
 docker_services: []
 
