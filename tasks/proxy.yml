@@ -46,6 +46,7 @@
           keyFile: "{{ certs_root }}/{{ h.host }}.key"
         {% endfor %}
         {% endfor %}
+        {% endfor %}
 
 - name: Create reverse-proxy
   include_tasks: service.yml
