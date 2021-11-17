@@ -42,10 +42,19 @@
         {% for s in docker_services %}
         {% for i in s.ingress | default([]) %}
         {% for h in i.hosts | default([]) %}
+        {% if h.https | default(true) | bool %}
+        {% if h.self_signed | default(true) | bool %}
 
-        # {{ s.name }} - {{ h.host }}
+        # SELF-SIGNED: {{ h.host }}
         - certFile: "/certs/{{ h.host }}.crt"
           keyFile: "/certs/{{ h.host }}.key"
+        {% else %}
+
+        # MANUAL: {{ h.host }}
+        - certFile: "{{ h.certFile }}"
+          keyFile: "{{ h.keyFile }}"
+        {% endif %}
+        {% endif %}
         {% endfor %}
         {% endfor %}
         {% endfor %}
