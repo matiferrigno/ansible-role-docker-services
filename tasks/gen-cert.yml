@@ -4,6 +4,7 @@
   community.crypto.openssl_privatekey:
     path: "{{ certs_root }}/{{ item.host }}.key"
     size: 4096
+  when: item.gen_cert | default(true) | bool
   loop: "{{ hosts }}"
 
 - name: Generate certificate signing request
@@ -14,6 +15,7 @@
     basic_constraints:
       - CA:FALSE
     basic_constraints_critical: true
+  when: item.gen_cert | default(true) | bool
   loop: "{{ hosts }}"
 
 - name: Generate self-signed public certificate
@@ -25,4 +27,5 @@
     ownca_privatekey_path: "{{ certs_root }}/ca.key"
     provider: ownca
     valid_at: "+365d"
+  when: item.gen_cert | default(true) | bool
   loop: "{{ hosts }}"

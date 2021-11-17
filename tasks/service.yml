@@ -9,7 +9,6 @@
       "group": item.group | default(docker_services_default_group),
       "ingress": item.ingress | default([]),
       "state": item.state | default("present"),
-      "gen_certs": item.gen_certs | default(true),
       }
     }}'
 
@@ -49,7 +48,6 @@
   vars:
     hosts: "{{ item.hosts | default([]) }}"
   loop: "{{ svc.ingress | default([]) }}"
-  when: svc.gen_certs
 
 - name: Systemd
   include_tasks: systemd.yml
