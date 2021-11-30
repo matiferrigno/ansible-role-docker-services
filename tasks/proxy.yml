@@ -33,6 +33,11 @@
     csr_path: "{{ certs_root }}/ca.csr"
     provider: selfsigned
 
+- name: Create config.d directory
+  file:
+    path: "{{ certs_root }}reverse-proxy/config.d"
+    state: directory
+
 - name: Add certs to traefik
   copy:
     dest: "{{ docker_services_root_path }}reverse-proxy/config.d/certs.yml"
