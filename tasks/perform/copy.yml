@@ -1,7 +1,7 @@
 ---
 
 - set_fact:
-    dir: "{{ (svc.workdir + '/' + (action.dest  | default(action.template | replace('.j2','')))) | dirname }}"
+    dir: "{{ (svc.workdir + '/' + (action.dest  | default(action.src | replace('.j2','')))) | dirname }}"
     dest: "{{ svc.workdir }}/{{ action.dest | default(action.src) }}"
 
 - name: "Create directory {{ dir }}"
