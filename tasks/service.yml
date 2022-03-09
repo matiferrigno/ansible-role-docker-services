@@ -4,6 +4,7 @@
   set_fact:
     svc: '{{ {
       "workdir": item.root_path | default(docker_services_root_path + item.name) + "/",
+      "name": item.systemd_name | default(item.name),
       "owner": item.owner | default(docker_services_default_owner),
       "group": item.group | default(docker_services_default_group),
       "ingress": item.ingress | default([]),
