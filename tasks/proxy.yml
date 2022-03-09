@@ -98,6 +98,9 @@
             {% for port in docker_services_proxy_extra_ports %}
                   - "{{ port }}:{{ port }}"
             {% endfor %}
+            {% for f in docker_services_proxy_env_file | default([]) %}
+                  - "{{ f }}"
+            {% endfor %}
                 volumes:
                   - ./config.d:/config.d
                   - ./certs:/certs
