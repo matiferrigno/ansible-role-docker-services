@@ -98,7 +98,7 @@
             {% for port in docker_services_proxy_extra_ports %}
                   - "{{ port }}:{{ port }}"
             {% endfor %}
-            {% if docker_services_proxy_env_file | default() | length | int > 0 %}
+            {% if docker_services_proxy_env_file | default([]) | length | int > 0 %}
                 env_file:
             {% endif %}
             {% for f in docker_services_proxy_env_file | default([]) %}
