@@ -88,7 +88,7 @@
             services:
               reverse-proxy:
                 image: {{ docker_services_proxy_image }}
-                command: {{ docker_services_proxy_command }}
+                command: {{ docker_services_proxy_command | join(' ') }}
                 restart: "unless-stopped"
                 networks:
                   - {{ docker_services_proxy_network }}

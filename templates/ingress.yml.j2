@@ -20,6 +20,9 @@ services:
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.entrypoints={{ h.entrypoints | default(['web','websecure'] | join(',')) }}"
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.rule=Host(`{{ h.host }}`)"
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls=true"
+{% if i.certresolver | default('') != '' %}
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls.certresolver={{ i.certresolver }}"
+{% endif %}
 {% for m in h.middlewares | default([]) %}
        - "traefik.http.routers.{{ h.host | replace('.','-') }}.middlewares={{ m }}"
 {% endfor %}
