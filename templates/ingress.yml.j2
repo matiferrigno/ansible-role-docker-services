@@ -22,6 +22,10 @@ services:
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls=true"
 {% if h.certresolver | default('') != '' %}
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls.certresolver={{ h.certresolver }}"
+{% if h.certwildcard | default('') != '' %}
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls.domains[0].main: {{ h.certwildcard }}"
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls.domains[0].sans: *.{{ h.certwildcard }}"
+{% endif %}
 {% endif %}
 {% for m in h.middlewares | default([]) %}
        - "traefik.http.routers.{{ h.host | replace('.','-') }}.middlewares={{ m }}"
