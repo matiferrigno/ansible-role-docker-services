@@ -20,13 +20,13 @@ services:
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.entrypoints={{ h.entrypoints | default(['web','websecure'] | join(',')) }}"
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.rule=Host(`{{ h.host }}`)"
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls=true"
+{% if h.certresolver | default('') != '' %}
+      - "traefik.http.routers.{{ h.host | replace('.','-') }}.tls.certresolver={{ h.certresolver }}"
+{% endif %}
 {% for m in h.middlewares | default([]) %}
        - "traefik.http.routers.{{ h.host | replace('.','-') }}.middlewares={{ m }}"
 {% endfor %}
       - "traefik.http.routers.{{ h.host | replace('.','-') }}.service={{ h.host | replace('.','-') }}"
-{% if h.certresolver | default('') != '' %}
-      - "traefik.http.routers.{{ h.host | replace('.','-') }}.service.tls.certresolver={{ h.certresolver }}"
-{% endif %}
       - "traefik.http.services.{{ h.host | replace('.','-') }}.loadbalancer.server.port={{ h.port | default(80) }}"
 {% endif %}
 {% endfor -%}
