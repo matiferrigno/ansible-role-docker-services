@@ -48,8 +48,8 @@
         {% for i in s.ingress | default([]) %}
         {% for h in i.hosts | default([]) %}
         {% if h.https | default(true) | bool %}
+        {% if h.certresolver | default('') == '' %}
         {% if h.self_signed | default(false) | bool %}
-        {% if h.certresolver | default('') != '' %}
 
         # SELF-SIGNED: {{ h.host }}
         - certFile: "/certs/{{ h.host }}.crt"
