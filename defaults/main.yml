@@ -21,6 +21,7 @@ docker_services_proxy_dashboard_url: dashboard.local
 docker_services_proxy_dashboard_users: "root:$$2y$$05$$HLNovB3ZR2WXsHQ8c8XOluQqiE6ZDB3XdDoiUP6DFXN0KgfnD8rOW" # root : toor
 docker_services_proxy_extra_ports: []
 docker_services_proxy_extra_volume: []
+docker_services_proxy_env_file: []
 docker_services_docker_sock: /var/run/docker.sock
 docker_services_root_path: /usr/local/src/
 docker_services_default_owner: root
@@ -29,7 +30,7 @@ docker_services_git_install: true
 docker_services_yq_install: true
 docker_services_yq_url: https://github.com/mikefarah/yq/releases/download/v4.12.1/yq_linux_amd64
 docker_services_compose_path: "/usr/bin/docker compose" # for compose 2.1.1
-
+docker_services_proxy_gen_cert_conf: false
 docker_services: []
 
 # Example:

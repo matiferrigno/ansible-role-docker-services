@@ -65,6 +65,7 @@
         {% endfor %}
         {% endfor %}
         {% endfor %}
+  when: docker_services_proxy_gen_cert_conf | default(true)
 
 - name: Create reverse-proxy
   include_tasks: service.yml
