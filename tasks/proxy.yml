@@ -95,8 +95,8 @@
                 networks:
                   - {{ docker_services_proxy_network }}
                 ports:
-                  - "{{ docker_services_proxy_http_port }}:80"
-                  - "{{ docker_services_proxy_https_port }}:443"
+                  - "{{ docker_services_proxy_bind_ip }}:{{ docker_services_proxy_http_port }}:80"
+                  - "{{ docker_services_proxy_bind_ip }}:{{ docker_services_proxy_https_port }}:443"
             {% for port in docker_services_proxy_extra_ports %}
                   - "{{ port }}:{{ port }}"
             {% endfor %}
