@@ -2,7 +2,7 @@
 
 docker_services_proxy_enabled: true # so nginx (docker-compose) is going to be deployed
 docker_services_proxy_network: proxy
-docker_services_proxy_image: traefik:v2.6
+docker_services_proxy_image: traefik:v2.7
 docker_services_proxy_command:
   - "--api.dashboard=true"
   - "--providers.docker"
