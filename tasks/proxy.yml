@@ -112,7 +112,7 @@
                   - ./certs:/certs
                   - {{ docker_services_docker_sock }}:/var/run/docker.sock
             {% for volume in docker_services_proxy_extra_volume %}
-                  - {{ volume }}
+                  - {{ volume[1:-1] }}
             {% endfor %}
                 labels:
                 - "traefik.enable=true"
