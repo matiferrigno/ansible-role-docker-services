@@ -26,6 +26,5 @@
     ownca_path: "{{ certs_root }}/ca.crt"
     ownca_privatekey_path: "{{ certs_root }}/ca.key"
     provider: ownca
-    valid_at: "+365d"
   when: item.gen_cert | default(true) | bool
   loop: "{{ hosts }}"
